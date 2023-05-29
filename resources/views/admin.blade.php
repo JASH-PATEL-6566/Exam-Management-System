@@ -1,10 +1,10 @@
 @extends('master')
 @section('content')     
 <div class="container mt-4">
-    <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+    <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#create_exam">
         Create Exam
     </button>
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="create_exam" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
@@ -128,7 +128,7 @@
                     </a>
                 </td>
                 <td class="align-middle m-auto">
-                    <a href="/edit_exam/{{$item->id}}" class="btn btn-warning">
+                    <a href="../edit_exam/{{$item->id}}" class="btn btn-warning">
                         <i class="fa-solid fa-pen-to-square"></i>
                     </a>
                     <a href="/delete_exam/{{$item->id}}" class="btn btn-danger">

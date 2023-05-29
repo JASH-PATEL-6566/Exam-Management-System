@@ -34,3 +34,6 @@ Route::post("/loginAdmin",[UserController::class,"admin_login"]);
 // exam controller
 Route::post("/create_new_exam",[ExamController::class,"createExam"]);
 Route::get("/admin",[ExamController::class,"fetchExam"]);
+Route::get("/edit_exam/{id}",[ExamController::class,"editExamIndex"]);
+Route::get("/delete_exam/{id}",[ExamController::class,"deleteExam"]);
+Route::post("/edit_exam",[ExamController::class,"editExam"]);
