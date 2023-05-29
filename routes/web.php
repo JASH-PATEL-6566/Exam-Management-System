@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ExamController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,8 +23,14 @@ Route::view("/user", "User");
 Route::view("/admin", "admin");
 
 // route controller
+
+// user controller
 Route::post("/loginUser",[UserController::class,"login"]);
 Route::get("/logout",[UserController::class,"logout"]);
 Route::get("/logoutAdmin",[UserController::class,"logoutAdmin"]);
 Route::post("/registerUser",[UserController::class,"register"]);
 Route::post("/loginAdmin",[UserController::class,"admin_login"]);
+
+// exam controller
+Route::post("/create_new_exam",[ExamController::class,"createExam"]);
+Route::get("/admin",[ExamController::class,"fetchExam"]);
