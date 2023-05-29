@@ -37,11 +37,16 @@ class UserController extends Controller
         return redirect("../");
     }
 
+    function logoutAdmin(){
+        Session::forget("admin");
+        return redirect("../admin_login");
+    }
+
     function admin_login(Request $request){
         $user = admin::where(['email' => $request->email])->first();
         if($user && $request->input("password") == $user->password){
             $request->session()->put("admin",$user);
-            return redirect("/user");
+            return redirect("/admin");
         }
         return "Username and password is not matched.";
     }

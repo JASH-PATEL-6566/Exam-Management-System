@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class process extends Model
 {
     use HasFactory;
+    public $table = "process";
 }

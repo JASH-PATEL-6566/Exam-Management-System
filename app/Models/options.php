@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class options extends Model
 {
     use HasFactory;
+    public $table = "options";
 }

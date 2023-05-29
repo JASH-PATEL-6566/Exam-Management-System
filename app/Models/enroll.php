@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class enroll extends Model
 {
     use HasFactory;
+    public $table = "enroll";
 }

@@ -19,9 +19,11 @@ Route::view("/", "login");
 Route::view("/admin_login", "admin_login");
 Route::view("/register", "register");
 Route::view("/user", "User");
+Route::view("/admin", "admin");
 
 // route controller
 Route::post("/loginUser",[UserController::class,"login"]);
 Route::get("/logout",[UserController::class,"logout"]);
+Route::get("/logoutAdmin",[UserController::class,"logoutAdmin"]);
 Route::post("/registerUser",[UserController::class,"register"]);
 Route::post("/loginAdmin",[UserController::class,"admin_login"]);
