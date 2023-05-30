@@ -34,7 +34,7 @@ class QuestionController extends Controller
             $optionInstance->save();
         }
 
-        return redirect("/questions/{{$examId}}");
+        return redirect("/questions/$examId");
     }
 
     function editQuestion($id){
@@ -64,15 +64,13 @@ class QuestionController extends Controller
             $optionInstance->save();
             $i--;
         }
-        $url = "/questions"."/".$examId;
-        return redirect($url);
+        return redirect("/questions/$examId");
     }
 
     function deleteQuestion($id){
         $ids = explode("_",$id);
         questions::where("id",$ids[0])->delete();
         options::where("question_id",$ids[0])->delete();
-        $url = "/questions"."/".$ids[1];
-        return redirect($url);
+        return redirect("/questions/$ids[1]");
     }
 }
