@@ -9,4 +9,5 @@ class enroll extends Model
 {
     use HasFactory;
     public $table = "enroll";
+    public $timestamps = false;
 }

@@ -23,24 +23,24 @@
             </li>
             @elseif(\Request::getRequestUri() == "/user" && Session::has("admin") && Session::has("user"))
             <li class="nav-item">
-              <a class="nav-link mx-3" aria-current="page" href="#">Exams</a>
+              <a class="nav-link mx-3" aria-current="page" href="/enrollExam">Enrol Exam</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link mx-3" href="#">Results</a>
+              <a class="nav-link mx-3" href="/user">My Exam</a>
             </li>
             @elseif(Session::has("admin"))
             <li class="nav-item mx-3">
-              <a class="nav-link" aria-current="page" href="#">Exams</a>
+              <a class="nav-link" aria-current="page" href="/admin">Exams</a>
             </li>
             <li class="nav-item mx-3">
-              <a class="nav-link" href="#">Users</a>
+              <a class="nav-link" href="/allUsers">Users</a>
             </li>
             @elseif(Session::has("user"))
             <li class="nav-item">
-              <a class="nav-link mx-3" aria-current="page" href="#">Exams</a>
+              <a class="nav-link mx-3" aria-current="page" href="/enrollExam">Enrol Exam</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link mx-3" href="#">Results</a>
+              <a class="nav-link mx-3" href="/user">My Exam</a>
             </li>
           @endif
         </ul>

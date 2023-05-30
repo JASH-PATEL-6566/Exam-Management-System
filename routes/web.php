@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 Route::view("/", "login");
 Route::view("/admin_login", "admin_login");
 Route::view("/register", "register");
-Route::view("/user", "User");
+// Route::view("/user", "User");
 Route::view("/admin", "admin");
 
 // route controller
@@ -38,6 +38,12 @@ Route::get("/admin",[ExamController::class,"fetchExam"]);
 Route::get("/edit_exam/{id}",[ExamController::class,"editExamIndex"]);
 Route::get("/delete_exam/{id}",[ExamController::class,"deleteExam"]);
 Route::post("/edit_exam",[ExamController::class,"editExam"]);
+// enroll for the exam
+Route::get("/user",[ExamController::class,"myExamIndex"]);
+Route::get("/enrollExam",[ExamController::class,"enrollExamIndex"]);
+Route::get("/checkEnrol",[ExamController::class,"checkEnrol"]);
+Route::post("/enrollExam",[ExamController::class,"enrollInExam"]);
+
 
 // question controller
 Route::get("/questions/{id}",[QuestionController::class,"questionsIndex"]);
