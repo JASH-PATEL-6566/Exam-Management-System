@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ExamController;
+use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -37,3 +38,10 @@ Route::get("/admin",[ExamController::class,"fetchExam"]);
 Route::get("/edit_exam/{id}",[ExamController::class,"editExamIndex"]);
 Route::get("/delete_exam/{id}",[ExamController::class,"deleteExam"]);
 Route::post("/edit_exam",[ExamController::class,"editExam"]);
+
+// question controller
+Route::get("/questions/{id}",[QuestionController::class,"questionsIndex"]);
+Route::get("/edit_question/{id}",[QuestionController::class,"editQuestion"]);
+Route::post("/addQuestion",[QuestionController::class,"addQuestion"]);
+Route::post("/edit_question",[QuestionController::class,"editQuestionInfo"]);
+Route::get("/delete_question/{id}",[QuestionController::class,"deleteQuestion"]);

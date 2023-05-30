@@ -9,4 +9,5 @@ class options extends Model
 {
     use HasFactory;
     public $table = "options";
+    public $timestamps = false;
 }
