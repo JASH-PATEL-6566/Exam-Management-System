@@ -17,6 +17,22 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;600&display=swap');
+        #timer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 80px;
+            font-weight: 600;
+            width: 350px;
+            height: 100px;
+            /* border: 1px solid black; */
+            color: black;
+            text-align: center;
+            align-self: center;
+            margin: auto;
+            position: relative;
+        }
         .custom-login {
             padding: 70px 10px;
         }
@@ -37,6 +53,7 @@
             position: absolute;
             bottom: 0;
             display: flex;
+            align-items: center;
             flex-direction: row;
             gap: 10px;
         }

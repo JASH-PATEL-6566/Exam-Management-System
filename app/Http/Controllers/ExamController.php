@@ -97,13 +97,15 @@ class ExamController extends Controller
     }
 
     function exam($id){
+        $time = exam::find($id)->duration;
         $questions = questions::where("exam_id", $id)->get();
         $options = [];
         foreach ($questions as $item) {
             $option = options::where("question_id", $item->id)->get();
             $options = array_merge($options, $option->toArray());
         }
-        return view("exam",["questions" => $questions, "options" => $options]);
+        return view("exam",["questions" => $questions, "options" => $options,"time" => $time]);
         // return ["questions" => $questions, "options" => $options];
+        // return $time;
     }
 }
