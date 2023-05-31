@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\enroll;
 use App\Models\exam;
+use App\Models\user;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -80,5 +81,16 @@ class ExamController extends Controller
         $exam_id = $req->query("exam_id");
         $data = enroll::where("exam_id",$exam_id)->get();
         return response()->json(['success'=>'Laravel ajax example is being processed.','enrolData' => $data],200);
+    }
+
+    function fetchEnrolUserForExam($id){
+        $enrollTemp = enroll::where("exam_id",$id)->get();
+        $enroll = [];
+        foreach($enrollTemp as $item){
+            $temp = user::find($item->user_id);
+            array_push($enroll,$temp);
+        }
+        return view("enrolls",["enrolData" => $enroll]);
+        // return $enroll;
     }
 }

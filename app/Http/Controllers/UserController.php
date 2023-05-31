@@ -50,4 +50,31 @@ class UserController extends Controller
         }
         return "Username and password is not matched.";
     }
+
+    function fetchAllUser(){
+        $data = user::all();
+        return view("allUsers",["allUsersData" => $data]);
+    }
+
+    function editUserIndex($id){
+        $data = user::find($id);
+        return view("edit_user",["userDetail" => $data]);
+    }
+
+    function editUserDetail(Request $req,$id){
+        $data = user::find($id);
+        $data->first_name = $req->input("firstName");
+        $data->last_name = $req->input("lastName");
+        $data->gender = $req->input("gender");
+        $data->address = $req->input("address");
+        $data->email = $req->input("email");
+        $data->mobile = $req->input("phone");
+        $data->save();
+        return redirect("/allUsers");
+    }
+
+    function deleteUser($id){
+        user::where("id",$id)->delete();
+        return redirect("/allUsers");
+    }
 }
