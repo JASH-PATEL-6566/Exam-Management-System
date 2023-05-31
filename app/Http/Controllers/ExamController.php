@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\enroll;
 use App\Models\exam;
+use App\Models\options;
+use App\Models\questions;
 use App\Models\user;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -92,5 +94,16 @@ class ExamController extends Controller
         }
         return view("enrolls",["enrolData" => $enroll]);
         // return $enroll;
+    }
+
+    function exam($id){
+        $questions = questions::where("exam_id", $id)->get();
+        $options = [];
+        foreach ($questions as $item) {
+            $option = options::where("question_id", $item->id)->get();
+            $options = array_merge($options, $option->toArray());
+        }
+        return view("exam",["questions" => $questions, "options" => $options]);
+        // return ["questions" => $questions, "options" => $options];
     }
 }

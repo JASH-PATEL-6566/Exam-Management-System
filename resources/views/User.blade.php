@@ -27,7 +27,7 @@
                 <td class="align-middle">{{$item->marks_per_wrong_answer}}</td>
                 <td class="align-middle">{{$item->status}}</td>
                 <td class="align-middle m-auto">
-                    <a href="../edit_exam/{{$item->id}}" class="btn btn-success">
+                    <a href="../exam/{{$item->id}}" class="btn btn-success">
                         Start Exam
                     </a>
                 </td>

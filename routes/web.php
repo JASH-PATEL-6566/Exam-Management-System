@@ -40,6 +40,7 @@ Route::post("/edit_user/{id}",[UserController::class,"editUserDetail"]);
 Route::post("/create_new_exam",[ExamController::class,"createExam"]);
 Route::get("/admin",[ExamController::class,"fetchExam"]);
 Route::get("/edit_exam/{id}",[ExamController::class,"editExamIndex"]);
+Route::get("/exam/{id}",[ExamController::class,"exam"]);
 Route::get("/delete_exam/{id}",[ExamController::class,"deleteExam"]);
 Route::post("/edit_exam",[ExamController::class,"editExam"]);
 

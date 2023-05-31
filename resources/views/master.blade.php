@@ -20,6 +20,26 @@
         .custom-login {
             padding: 70px 10px;
         }
+        .carousel-container {
+            padding: 4px;
+            /* border: 2px solid black; */
+            width: 60%;
+            height: 10em;
+        }
+        
+        .exam_container{
+            position: relative;
+            /* border: 2px solid black; */
+            height: 14em;
+        }
+
+        .carousel-button {
+            position: absolute;
+            bottom: 0;
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+        }
     </style>
 </head>
 
