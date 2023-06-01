@@ -4,6 +4,7 @@
 <script>
     $(document).ready(function() {
         var time = document.getElementById("timeFetch").value;
+        var form = document.getElementById("form");
         startTimer(time);
         $("#carouselExample").carousel({
             wrap: false
@@ -16,12 +17,18 @@
 	var countDownDate = new Date().getTime() + (time * 60 * 1000); // 5 minutes from now
 	
 	// timer
-	var timer = setInterval(function() {
+	var timer = setInterval(function() {      
 		var now = new Date().getTime();
 		var distance = countDownDate - now;
+		var hours = Math.floor((distance % (1000 * 60 * 60 * 60)) / (1000 * 60 * 60));
 		var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
 		var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-		$('#timer').text(minutes + "m " + seconds + "s ");
+        if(hours > 0){
+            $('#timer').text(hours + "h " +minutes + "m " + seconds + "s ");
+        }
+        else{
+            $('#timer').text(minutes + "m " + seconds + "s ");
+        }
 		
 		// set color red if timer less than 2 minutes
 		if (distance < (limit * 60 * 1000)) {
@@ -31,15 +38,16 @@
 		// give expired text by down
 		if (distance < 0) {
 			clearInterval(timer);
-			$('#timer').text("EXPIRED");
+            form.submit();
 		}
   	}, 1000);
 	
-	// reset by click on DOM
-	$('html').on('click',function() {
-		clearInterval(timer);
-		startTimer();
-	});
+
+	// // reset by click on DOM
+	// $('html').on('click',function() {
+	// 	clearInterval(timer);
+	// 	startTimer();
+	// });
 		
 }
 </script>
@@ -50,6 +58,12 @@
     <input type="hidden" id="timeFetch" value="{{$time}}">
 <?php
     echo "
+    <form id='form' action='/ExamsResponse' method='post'>
+        <input type='hidden' id='exam_id' name='exam_id' value='$exam_id'>";
+?>
+    @csrf
+<?php
+    echo"
     <div class='exam_container d-flex flex-row'>
     <div class='carousel-container'>
     <div id='carouselExample' class='carousel slide'>
@@ -69,7 +83,7 @@
         for($j=count($options) - 1;$j >= 0  ; $j--){
             if($questions[$i]['id'] == $options[$j]['question_id']){
                 echo "<div class='form-check'>
-                            <input class='form-check-input' type='radio' name='flexRadioDefault' id='flexRadioDefault1'>
+                            <input class='form-check-input' type='radio' value='".$options[$j]['title']."' name='".$questions[$i]['id']."' id='flexRadioDefault1'>
                             <label class='form-check-label' for='flexRadioDefault1'>
                                 ".$options[$j]['title']."
                             </label>
@@ -92,8 +106,9 @@
           Next
         </button>
       </div>";
-      echo "<div id='timer'>-m -s</div>";
-      echo  "</div>";
+      echo "<div id='timer'></div>";
+      echo  "</div>
+    </form>";
 ?>
 </div>
 
@@ -101,8 +116,14 @@
     var questions = document.getElementById("questions").value;
     var btn = document.getElementById("btn");
 
+    
+
+
     var current = 1;
     function next(){
+        if(btn.innerHTML === "Submit"){
+            form.submit();
+        }
         if(current == questions-1){
             btn.innerHTML = "Submit";
             btn.type = "submit";

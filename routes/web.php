@@ -43,6 +43,8 @@ Route::get("/edit_exam/{id}",[ExamController::class,"editExamIndex"]);
 Route::get("/exam/{id}",[ExamController::class,"exam"]);
 Route::get("/delete_exam/{id}",[ExamController::class,"deleteExam"]);
 Route::post("/edit_exam",[ExamController::class,"editExam"]);
+Route::post("/ExamsResponse",[ExamController::class,"ExamsResponse"]);
+Route::get("/examResponse/{id}",[ExamController::class,"fetchExamResponse"]);
 
 // enroll for the exam
 Route::get("/user",[ExamController::class,"myExamIndex"]);

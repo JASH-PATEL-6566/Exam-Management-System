@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\enroll;
 use App\Models\exam;
 use App\Models\options;
+use App\Models\process;
+use App\Models\question_answers;
 use App\Models\questions;
 use App\Models\user;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class ExamController extends Controller
@@ -57,12 +60,15 @@ class ExamController extends Controller
     function myExamIndex(){
         $user_id = Session::get("user")->id;
         $data = enroll::where("user_id",$user_id)->get();
+
+        $process = process::where("user_id",$user_id)->get();
+
         $enroll = [];
         foreach($data as $item){
             $temp = exam::find($item->exam_id);
             array_push($enroll,$temp);
         }
-        return view("User",["enrolExams" => $enroll]);
+        return view("User",["enrolExams" => $enroll,"process" => $process]);
     }
 
     function enrollExamIndex(){
@@ -97,15 +103,84 @@ class ExamController extends Controller
     }
 
     function exam($id){
-        $time = exam::find($id)->duration;
-        $questions = questions::where("exam_id", $id)->get();
+        date_default_timezone_set("Asia/Calcutta");
+        $dateTime = date('d-m-Y H:i:s');
+
+        $data = process::where("exam_id",$id)->get();
+
+        if(count($data) == 0){
+            $process = new process();
+            $process->user_id = Session::get("user")->id;
+            $process->exam_id = $id;
+            $process->start_time = $dateTime;
+            $process->save();
+
+            $time = exam::find($id)->duration;
+            $questions = questions::where("exam_id", $id)->get();
+            $options = [];
+            foreach ($questions as $item) {
+                $option = options::where("question_id", $item->id)->get();
+                $options = array_merge($options, $option->toArray());
+            }
+            return view("exam",["exam_id" => $id,"questions" => $questions, "options" => $options,"time" => $time]);
+        }
+        
+        return redirect("user");
+    }
+
+    function ExamsResponse(Request $req){
+        $exam_id = $req->input("exam_id");
+        $userId = Session::get("user")->id;
+        $examData = exam::find($exam_id);
+        $right_marks = $examData->marks_per_right_answer;
+        $wrong_marks = $examData->marks_per_wrong_answer;
+
+        $allQuestions = questions::where("exam_id",$exam_id)->get();
+        foreach($allQuestions as $item){
+            $questionId = $item->id;
+            $questionAns = $item->answer;
+
+            $question_answers = new question_answers();
+            $question_answers->user_id = $userId;
+            $question_answers->exam_id = $exam_id;
+            $question_answers->question_id = $questionId;
+            $question_answers->user_answer_option = $req->input("".$questionId);
+            if($req->input("".$questionId) == $questionAns){
+                $question_answers->marks = $right_marks;
+            }
+            else{
+                $question_answers->marks = $wrong_marks;
+            }
+            $question_answers->save();
+        }
+
+        return redirect("examResponse/$exam_id");
+    }
+
+    function fetchExamResponse($id){
+        // $data = question_answers::where("exam_id",$id)->get();
+        // $questions = questions::where("exam_id",$id)->get();
+        // $options = [];
+        //     foreach ($questions as $item) {
+        //         $option = options::where("question_id", $item->id)->get();
+        //         $options = array_merge($options, $option->toArray());
+        //     }
+        $userId = Session::get("user")->id;
+
+        $data = DB::table('question_answers')
+        ->leftjoin('questions', 'question_answers.question_id', '=', 'questions.id')
+        // ->leftjoin('options', 'questions.id', '=', 'options.question_id')
+        ->leftjoin('exam', 'exam.id', '=', 'questions.exam_id')
+        ->where('questions.exam_id', $id)
+        ->where('question_answers.user_id', $userId)
+        ->get();
+
         $options = [];
-        foreach ($questions as $item) {
-            $option = options::where("question_id", $item->id)->get();
+        foreach ($data as $item) {
+            $option = options::where("question_id", $item->question_id)->get();
             $options = array_merge($options, $option->toArray());
         }
-        return view("exam",["questions" => $questions, "options" => $options,"time" => $time]);
-        // return ["questions" => $questions, "options" => $options];
-        // return $time;
+
+        return view("examResponse",["allData" => $data,"options" => $options]);
     }
 }

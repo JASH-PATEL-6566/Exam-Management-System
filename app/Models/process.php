@@ -9,4 +9,5 @@ class process extends Model
 {
     use HasFactory;
     public $table = "process";
+    public $timestamps = false;
 }

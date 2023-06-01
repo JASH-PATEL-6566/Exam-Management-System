@@ -25,12 +25,32 @@
                 <td class="align-middle">{{$item->total_question}}</td>
                 <td class="align-middle">{{$item->marks_per_right_answer}}</td>
                 <td class="align-middle">{{$item->marks_per_wrong_answer}}</td>
-                <td class="align-middle">{{$item->status}}</td>
-                <td class="align-middle m-auto">
+                @if (count($process) == 0)
+                  <td class="align-middle">Pending</td>
+                  <td class="align-middle m-auto">
                     <a href="../exam/{{$item->id}}" class="btn btn-success">
-                        Start Exam
+                      Start Exam
                     </a>
-                </td>
+                  </td>
+                @else    
+                    @foreach ($process as $pros)
+                          @if ($item->id == $pros->exam_id)
+                              <td class="align-middle">Completed</td>
+                              <td class="align-middle m-auto">
+                                <a href="../examResponse/{{$item->id}}" class="btn btn-warning">
+                                  Show Result
+                                </a>
+                              </td>
+                          @else
+                              <td class="align-middle">Pending</td>
+                              <td class="align-middle m-auto">
+                                <a href="../exam/{{$item->id}}" class="btn btn-success">
+                                  Start Exam
+                                </a>
+                              </td>
+                          @endif
+                    @endforeach
+                @endif
             </tr>
             @endforeach
         </tbody>
